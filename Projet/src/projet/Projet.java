@@ -1,0 +1,44 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package projet;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
+
+/**
+ *
+ * @author pondavda
+ */
+public class Projet extends Application {
+    
+    public static FXMLDocumentController controleur;
+    
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+        
+        Font.loadFont(Projet.class.getResource("BRADHITC.TTF").toExternalForm(), 20);
+        
+        Scene scene = new Scene(root);
+        
+        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
+    
+}
