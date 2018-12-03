@@ -170,6 +170,10 @@ public final class PostItInitializer {
                 p.x = 0 + p.taille/2;
             if(p.y - p.taille / 2 < 0)
                 p.y = 0 + p.taille/2;
+            if(p.x + p.taille > Projet.controleur.panneau.getWidth())
+                p.x = Projet.controleur.panneau.getWidth() - p.taille / 2;
+            if(p.y + p.taille > Projet.controleur.panneau.getHeight())
+                p.y = Projet.controleur.panneau.getHeight() - p.taille / 2;
             p.setLayoutX(p.x - p.taille / 2);
             p.setLayoutY(p.y - p.taille / 2);
             //Mettre à jour ses composants
