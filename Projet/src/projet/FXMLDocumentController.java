@@ -5,6 +5,8 @@
  */
 package projet;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,6 +24,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 
 /**
  *
@@ -49,6 +52,27 @@ public class FXMLDocumentController implements Initializable {
         postItListe.add(postIt);
         panneau.getChildren().add(postIt);
         postIt.componentsToFront();
+    }
+    
+    @FXML
+    private  void chargerPostIt(ActionEvent event){
+        try {
+            FileChooser fileChooser = new FileChooser();
+            File file = fileChooser.showOpenDialog(null);
+            if (file != null) {
+              postItListe.addAll(PostItJsonSerializer.importerPostIt(file));
+            }
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+    }
+    
+    @FXML
+    private void sauvegarderPostIt(ActionEvent event){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choisissez un fichier :");
+        File file = fileChooser.showSaveDialog(Projet.scene.getWindow());
+        PostItJsonSerializer.exporterPostIt(postItListe, file);
     }
     
     public String getTexteFromDialog(String contenuActuel){
