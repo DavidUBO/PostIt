@@ -35,6 +35,7 @@ public class PostIt extends Canvas {
     static final int BOUTON_MARGE_GAUCHE = 10;
     static final int BOUTON_MARGE_HAUT = 10;
     static final int COULEUR_BOX_MARGE_BAS = 10;
+    static final int COLOR_PICKER_DEFAULT_HEIGHT = 25;
     
     public PostIt(double x, double y) {
         this.x = x;
@@ -110,5 +111,20 @@ public class PostIt extends Canvas {
     public void afficheParDessus(){
         this.toFront();
         this.componentsToFront();
+    }
+    
+    public void setLayoutLabelContenu(){
+        this.labelContenu.setLayoutX(this.x + LABEL_MARGE_HORIZONTALE);
+        this.labelContenu.setLayoutY(this.y + LABEL_MARGE_VERTICALE);
+    }
+    
+    public void setButtonBarLayout(){
+        this.buttonBar.setLayoutX(this.x + BOUTON_MARGE_GAUCHE);
+        this.buttonBar.setLayoutY(this.y + BOUTON_MARGE_HAUT);
+    }
+    
+    public void setColorPickerLayout(){
+        this.choixCouleur.setLayoutX(this.x + LABEL_MARGE_HORIZONTALE);
+        this.choixCouleur.setLayoutY(this.y + this.taille - COULEUR_BOX_MARGE_BAS - COLOR_PICKER_DEFAULT_HEIGHT);
     }
 }

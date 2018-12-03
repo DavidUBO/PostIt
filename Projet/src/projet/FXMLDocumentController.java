@@ -45,7 +45,7 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private void creerUnPostIt(ActionEvent event) {
-        PostIt postIt = new PostIt(100, 100);
+        PostIt postIt = new PostIt(0, 0);
         postItListe.add(postIt);
         panneau.getChildren().add(postIt);
         postIt.componentsToFront();

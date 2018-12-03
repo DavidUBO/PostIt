@@ -20,6 +20,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import static projet.PostIt.BOUTON_MARGE_GAUCHE;
 import static projet.PostIt.BOUTON_MARGE_HAUT;
+import static projet.PostIt.COLOR_PICKER_DEFAULT_HEIGHT;
 import static projet.PostIt.LABEL_MARGE_VERTICALE;
 import static projet.PostIt.LABEL_MARGE_HORIZONTALE;
 import static projet.PostIt.COULEUR_BOX_MARGE_BAS;
@@ -30,15 +31,13 @@ import static projet.PostIt.COULEUR_BOX_MARGE_BAS;
  */
 public final class PostItInitializer {
     
-    private static final int COLOR_PICKER_DEFAULT_HEIGHT = 25;
-    
     /**
      * Permet d'initialiser un post-it pour qu'il soit dans un état stable. Son comportement est également initialisé.
      * @param p Le post-it à initialiser
      */
     public static void init(PostIt p) {
-        p.setLayoutX(p.x - p.taille / 2);
-        p.setLayoutY(p.y - p.taille / 2);
+        p.setLayoutX(p.x);
+        p.setLayoutY(p.y);
         p.setWidth(p.taille);
         p.setHeight(p.taille);        
         
@@ -47,8 +46,7 @@ public final class PostItInitializer {
         
         //Ajout des boutons
         p.buttonBar = new ButtonBar();
-        p.buttonBar.setLayoutX(p.x - p.taille / 2 + BOUTON_MARGE_GAUCHE);
-        p.buttonBar.setLayoutY(p.y - p.taille / 2 + BOUTON_MARGE_HAUT);
+        p.setButtonBarLayout();
         p.buttonBar.setBackground(new Background(new BackgroundFill(new Color(1, 1, 1, 0), null, null)));
         Projet.controleur.panneau.getChildren().add(p.buttonBar);
         Color boutonsColor = new Color(1, 1, 1, 0.5);
@@ -67,8 +65,7 @@ public final class PostItInitializer {
     
     public static void initLabelContenu(PostIt p, Label label){
         p.labelContenu = label;
-        label.setLayoutX(p.x - p.taille / 2 + LABEL_MARGE_HORIZONTALE);
-        label.setLayoutY(p.y - p.taille / 2 + LABEL_MARGE_VERTICALE);
+        p.setLayoutLabelContenu();
         label.setMaxSize(p.taille - 2 * LABEL_MARGE_HORIZONTALE, p.taille - (LABEL_MARGE_VERTICALE * 2) - COLOR_PICKER_DEFAULT_HEIGHT);
         label.setTextFill(Color.BLACK);
         label.setWrapText(true);
@@ -79,6 +76,9 @@ public final class PostItInitializer {
                 Projet.controleur.panneau.setCursor(Cursor.DEFAULT);
                 p.editerTexte();
             }
+        });
+        label.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent t) -> {
+            p.afficheParDessus();
         });
     }
     
@@ -121,8 +121,7 @@ public final class PostItInitializer {
     public static void initColorPicker(PostIt p, ColorPicker picker, Color couleur){
         //Dessin
         p.choixCouleur = picker;
-        picker.setLayoutX(p.x - p.taille / 2 + LABEL_MARGE_HORIZONTALE);
-        picker.setLayoutY(p.y + p.taille / 2 - COULEUR_BOX_MARGE_BAS - COLOR_PICKER_DEFAULT_HEIGHT);
+        p.setColorPickerLayout();
         picker.setBackground(new Background(new BackgroundFill(couleur, CornerRadii.EMPTY, Insets.EMPTY)));
         Projet.controleur.panneau.getChildren().add(picker);
         //Handlers
@@ -166,23 +165,20 @@ public final class PostItInitializer {
             // Mettre à jour la position du post-it
             p.x = t.getSceneX() - p.decalageX;
             p.y = t.getSceneY() - p.decalageY;
-            if(p.x - p.taille / 2 < 0)
-                p.x = 0 + p.taille/2;
-            if(p.y - p.taille / 2 < 0)
-                p.y = 0 + p.taille/2;
-            if(p.x + p.taille / 2 > Projet.controleur.panneau.getWidth())
-                p.x = Projet.controleur.panneau.getWidth() - p.taille / 2;
-            if(p.y + p.taille / 2 > Projet.controleur.panneau.getHeight())
-                p.y = Projet.controleur.panneau.getHeight() - p.taille / 2;
-            p.setLayoutX(p.x - p.taille / 2);
-            p.setLayoutY(p.y - p.taille / 2);
+            if(p.x < 0)
+                p.x = 0;
+            if(p.y < 0)
+                p.y = 0;
+            if(p.x + p.taille > Projet.controleur.panneau.getWidth())
+                p.x = Projet.controleur.panneau.getWidth() - p.taille;
+            if(p.y + p.taille > Projet.controleur.panneau.getHeight())
+                p.y = Projet.controleur.panneau.getHeight() - p.taille;
+            p.setLayoutX(p.x);
+            p.setLayoutY(p.y);
             //Mettre à jour ses composants
-            p.labelContenu.setLayoutX(p.x - p.taille / 2 + LABEL_MARGE_HORIZONTALE);
-            p.labelContenu.setLayoutY(p.y - p.taille / 2 + LABEL_MARGE_VERTICALE);
-            p.buttonBar.setLayoutX(p.x - p.taille / 2 + BOUTON_MARGE_GAUCHE);
-            p.buttonBar.setLayoutY(p.y - p.taille / 2 + BOUTON_MARGE_HAUT);
-            p.choixCouleur.setLayoutX(p.x - p.taille / 2 + LABEL_MARGE_HORIZONTALE);
-            p.choixCouleur.setLayoutY(p.y + p.taille / 2 - COULEUR_BOX_MARGE_BAS - COLOR_PICKER_DEFAULT_HEIGHT);
+            p.setLayoutLabelContenu();
+            p.setButtonBarLayout();
+            p.setColorPickerLayout();
             //Redessiner le post-it
             p.draw();
         });
