@@ -1,0 +1,40 @@
+{
+    "postits":[
+        {
+            "x":"20.0",
+            "y":"200.0",
+            "taille":"200.0",
+            "contenu":"J'ai envie de carottes !",
+            "couleur":
+                {
+                    "rouge":"0.2",
+                    "vert":"0.5",
+                    "bleu":"0.1"
+                }
+        },
+        {
+            "x":"200.0",
+            "y":"100.0",
+            "taille":"300.0",
+            "contenu":"De quoi faire un hachis Parmentier !",
+            "couleur":
+                {
+                    "rouge":"0.5",
+                    "vert":"0.8",
+                    "bleu":"0.4"
+                }
+        },
+        {
+            "x":"300.0",
+            "y":"50.0",
+            "taille":"400.0",
+            "contenu":"Promener le chien !",
+            "couleur":
+                {
+                    "rouge":"0.6",
+                    "vert":"0.4",
+                    "bleu":"0.3"
+                }
+        }
+    ]
+}
