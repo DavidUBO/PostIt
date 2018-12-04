@@ -58,9 +58,11 @@ public class FXMLDocumentController implements Initializable {
     private  void chargerPostIt(ActionEvent event){
         try {
             FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Choisissez un fichier à charger :");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON", "*.json"));
             File file = fileChooser.showOpenDialog(null);
             if (file != null) {
-              postItListe.addAll(PostItJsonSerializer.importerPostIt(file));
+              //postItListe.addAll(PostItJsonSerializer.importerPostIt(file));
             }
         } catch (Exception e) {
           e.printStackTrace();
@@ -71,8 +73,10 @@ public class FXMLDocumentController implements Initializable {
     private void sauvegarderPostIt(ActionEvent event){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choisissez un fichier :");
-        File file = fileChooser.showSaveDialog(Projet.scene.getWindow());
-        PostItJsonSerializer.exporterPostIt(postItListe, file);
+        File file = fileChooser.showSaveDialog(null);
+        if(file != null){
+            //PostItJsonSerializer.exporterPostIt(postItListe, file);
+        }
     }
     
     public String getTexteFromDialog(String contenuActuel){

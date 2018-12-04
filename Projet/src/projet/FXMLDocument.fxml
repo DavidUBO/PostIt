@@ -28,8 +28,8 @@
    <bottom>
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
-            <Pane />
-          <Button mnemonicParsing="false" text="Sauvegarder les post-it" />
+            <Pane HBox.hgrow="ALWAYS" />
+          <Button mnemonicParsing="false" onAction="#sauvegarderPostIt" text="Sauvegarder les post-it" />
             <Button mnemonicParsing="false" onAction="#chargerPostIt" text="Charger des post-it" />
         </items>
       </ToolBar>
