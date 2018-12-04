@@ -13,23 +13,24 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
-import static projet.PostIt.BOUTON_MARGE_GAUCHE;
-import static projet.PostIt.BOUTON_MARGE_HAUT;
 import static projet.PostIt.COLOR_PICKER_DEFAULT_HEIGHT;
 import static projet.PostIt.LABEL_MARGE_VERTICALE;
 import static projet.PostIt.LABEL_MARGE_HORIZONTALE;
-import static projet.PostIt.COULEUR_BOX_MARGE_BAS;
 
 /**
  *
  * @author pondavda
  */
 public final class PostItInitializer {
+    
+    public static final int TAILLE_IMAGE_BOUTON = 27;
     
     /**
      * Permet d'initialiser un post-it pour qu'il soit dans un état stable. Son comportement est également initialisé.
@@ -48,12 +49,15 @@ public final class PostItInitializer {
         p.buttonBar = new ButtonBar();
         p.setButtonBarLayout();
         p.buttonBar.setBackground(new Background(new BackgroundFill(new Color(1, 1, 1, 0), null, null)));
+        p.buttonBar.setButtonMinWidth(1 + TAILLE_IMAGE_BOUTON + 1);
         Projet.controleur.panneau.getChildren().add(p.buttonBar);
         Color boutonsColor = new Color(1, 1, 1, 0.5);
         //Ajout du bouton "Éditer"   
-        PostItInitializer.initBoutonEditer(p, new Button("Éditer"), boutonsColor);
+        PostItInitializer.initBoutonEditer(p, new Button(), boutonsColor);
         //Ajout du bouton "Supprimer"
-        PostItInitializer.initBoutonSupprimer(p, new Button("Supprimer"), boutonsColor);
+        PostItInitializer.initBoutonSupprimer(p, new Button(), boutonsColor);
+        //Ajout du bouton "Archiver"
+        PostItInitializer.initBoutonArchiver(p, new Button(), boutonsColor);
         
         //Ajout de la liste déroulante pour choisir les couleur
         PostItInitializer.initColorPicker(p, new ColorPicker(p.couleur), boutonsColor);
@@ -66,7 +70,7 @@ public final class PostItInitializer {
     public static void initLabelContenu(PostIt p, Label label){
         p.labelContenu = label;
         p.setLayoutLabelContenu();
-        label.setMaxSize(p.taille - 2 * LABEL_MARGE_HORIZONTALE, p.taille - (LABEL_MARGE_VERTICALE * 2) - COLOR_PICKER_DEFAULT_HEIGHT);
+        label.setMaxSize(p.taille - 2 * LABEL_MARGE_HORIZONTALE, p.taille - (LABEL_MARGE_VERTICALE * 2) - COLOR_PICKER_DEFAULT_HEIGHT - (1 + TAILLE_IMAGE_BOUTON + 1));
         label.setTextFill(Color.BLACK);
         label.setWrapText(true);
         label.getStyleClass().add("postItContenu");
@@ -84,6 +88,11 @@ public final class PostItInitializer {
     
     public static void initBoutonEditer(PostIt p, Button bouton, Color couleur){
         //Dessin
+        ImageView image = new ImageView(Projet.controleur.editImage);
+        image.setFitWidth(TAILLE_IMAGE_BOUTON);
+        image.setFitHeight(TAILLE_IMAGE_BOUTON);
+        bouton.setGraphic(image);
+        bouton.setTooltip(new Tooltip("Éditer"));
         bouton.setBackground(new Background(new BackgroundFill(couleur, CornerRadii.EMPTY, Insets.EMPTY)));
         ButtonBar.setButtonData(bouton, ButtonData.LEFT);
         p.buttonBar.getButtons().add(bouton);
@@ -102,6 +111,11 @@ public final class PostItInitializer {
     
     public static void initBoutonSupprimer(PostIt p, Button bouton, Color couleur){
         //Dessin
+        ImageView image = new ImageView(Projet.controleur.deleteImage);
+        image.setFitWidth(TAILLE_IMAGE_BOUTON);
+        image.setFitHeight(TAILLE_IMAGE_BOUTON);
+        bouton.setGraphic(image);
+        bouton.setTooltip(new Tooltip("Supprimer"));
         bouton.setBackground(new Background(new BackgroundFill(couleur, CornerRadii.EMPTY, Insets.EMPTY)));
         ButtonBar.setButtonData(bouton, ButtonData.LEFT);
         p.buttonBar.getButtons().add(bouton);
@@ -118,10 +132,34 @@ public final class PostItInitializer {
         });
     }
     
+    public static void initBoutonArchiver(PostIt p, Button bouton, Color couleur){
+        //Dessin
+        ImageView image = new ImageView(Projet.controleur.archiveImage);
+        image.setFitWidth(TAILLE_IMAGE_BOUTON);
+        image.setFitHeight(TAILLE_IMAGE_BOUTON);
+        bouton.setGraphic(image);
+        bouton.setTooltip(new Tooltip("Archiver"));
+        bouton.setBackground(new Background(new BackgroundFill(couleur, CornerRadii.EMPTY, Insets.EMPTY)));
+        ButtonBar.setButtonData(bouton, ButtonData.LEFT);
+        p.buttonBar.getButtons().add(bouton);
+        //Handlers
+        bouton.setOnAction((ActionEvent event) -> {
+            Projet.controleur.panneau.setCursor(Cursor.DEFAULT);
+            p.archiverPostIt();
+        });
+        bouton.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent t) -> {
+            Projet.controleur.panneau.setCursor(Cursor.HAND);
+        });
+        bouton.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent t) -> {
+            Projet.controleur.panneau.setCursor(Cursor.DEFAULT);
+        });
+    }
+    
     public static void initColorPicker(PostIt p, ColorPicker picker, Color couleur){
         //Dessin
         p.choixCouleur = picker;
         p.setColorPickerLayout();
+        p.choixCouleur.setTooltip(new Tooltip("Modifier la couleur"));
         picker.setBackground(new Background(new BackgroundFill(couleur, CornerRadii.EMPTY, Insets.EMPTY)));
         Projet.controleur.panneau.getChildren().add(picker);
         //Handlers

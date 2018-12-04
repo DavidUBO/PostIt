@@ -6,22 +6,26 @@
 package projet;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
@@ -40,15 +44,42 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     public ScrollPane scroll;
     
+    @FXML
+    public ToggleButton changerArchivageBouton;
+    
+    @FXML
+    public ChoiceBox postItChoixTaille;
+    
+    Image editImage;
+    Image deleteImage;
+    Image archiveImage;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Projet.controleur = this;
         postItListe = new LinkedList<>();
+        
+        List<String> tailles = new ArrayList<>();
+        for(PostItTailleEnum taille : PostItTailleEnum.values()){
+            tailles.add(taille.toString());
+        }
+        
+        postItChoixTaille.getItems().addAll(tailles);
+        postItChoixTaille.setValue(PostItTailleEnum.TailleNormale.toString());
+        
+        postItChoixTaille.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> observableValue, Number number, Number number2) -> {
+            PostIt.changeTaillePostIt(postItListe, PostItTailleEnum.getEnumValue((String)postItChoixTaille.getValue()).getValue());
+        });
+        
+        editImage = new Image(getClass().getResourceAsStream("edit.png"));
+        deleteImage = new Image(getClass().getResourceAsStream("trash.png"));
+        archiveImage = new Image(getClass().getResourceAsStream("archive.png"));
     }
     
     @FXML
     private void creerUnPostIt(ActionEvent event) {
-        PostIt postIt = new PostIt(0, 0);
+        PostIt postIt = new PostIt(0, 0, PostItTailleEnum.getEnumValue((String)postItChoixTaille.getValue()).getValue());
+//        PostIt postIt = new PostIt(0, 0, PostItTailleEnum.TailleNormale.getValue());
         postItListe.add(postIt);
         panneau.getChildren().add(postIt);
         postIt.componentsToFront();
@@ -114,6 +145,22 @@ public class FXMLDocumentController implements Initializable {
         }
         else{
             return contenuActuel;
+        }
+    }
+    
+    @FXML
+    public void changerAffichageArchive() {
+        if(changerArchivageBouton.isSelected()){
+            for(PostIt courant : postItListe){
+                if(courant.estArchive)
+                    courant.redessiner();
+            }
+        }
+        else{
+            for(PostIt courant : postItListe){
+                if(courant.estArchive)
+                    courant.effacer();
+            }
         }
     }
 }
