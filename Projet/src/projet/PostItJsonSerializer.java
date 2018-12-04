@@ -11,9 +11,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.LinkedList;
+import java.util.List;
 import javafx.scene.paint.Color;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,9 +24,9 @@ import org.json.JSONObject;
  */
 public final class PostItJsonSerializer {
    
-   public static LinkedList<PostIt> importerPostIt(File fichier){
+   public static List<PostIt> importerPostIt(File fichier){
       
-       LinkedList<PostIt> postIts = new LinkedList();
+       List<PostIt> postIts = new LinkedList();
            
         try {		
             JSONObject json = new JSONObject(new String(fichier.toString()));
@@ -47,7 +46,7 @@ public final class PostItJsonSerializer {
                     JSONArray tableauCouleur = tableauPostIt.getJSONObject(i).getJSONArray("couleur");
                     Color couleur = new Color(tableauCouleur.getDouble(0), tableauCouleur.getDouble(1), tableauCouleur.getDouble(2), 1.0);
                     
-                    PostIt monPostIt = new PostIt(x,y,couleur,contenu);
+                    PostIt monPostIt = new PostIt(x,y,taille,couleur,contenu);
                     postIts.add(monPostIt);                    
                     
                     System.out.println("- Post It" + contenu + " (Importé)");
@@ -62,7 +61,7 @@ public final class PostItJsonSerializer {
         return null;
    }
    
-   public static void exporterPostIt(LinkedList<PostIt> postIts, File fichier) throws FileNotFoundException, IOException{
+   public static void exporterPostIt(List<PostIt> postIts, File fichier) throws FileNotFoundException, IOException{
            
         try {		
            

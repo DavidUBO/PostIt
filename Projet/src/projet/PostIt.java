@@ -51,6 +51,17 @@ public class PostIt extends Canvas {
         //editerTexte();
     }
     
+    public PostIt(double x, double y, double taille, Color couleur, String contenu) {
+        this.x = x;
+        this.y = y;
+        this.taille = taille;
+        this.estArchive = false;
+        this.couleur = couleur;
+        this.contenu = contenu;
+        init();
+        //editerTexte();
+    }
+    
     public final void init(){
         gc = getGraphicsContext2D();
         PostItInitializer.init(this);

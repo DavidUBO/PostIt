@@ -6,12 +6,15 @@
 package projet;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -93,7 +96,7 @@ public class FXMLDocumentController implements Initializable {
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON", "*.json"));
             File file = fileChooser.showOpenDialog(null);
             if (file != null) {
-              //postItListe.addAll(PostItJsonSerializer.importerPostIt(file));
+              postItListe.addAll(PostItJsonSerializer.importerPostIt(file));
             }
         } catch (Exception e) {
           e.printStackTrace();
@@ -102,11 +105,15 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private void sauvegarderPostIt(ActionEvent event){
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choisissez un fichier :");
-        File file = fileChooser.showSaveDialog(null);
-        if(file != null){
-            //PostItJsonSerializer.exporterPostIt(postItListe, file);
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Choisissez un fichier :");
+            File file = fileChooser.showSaveDialog(null);
+            if(file != null){
+                PostItJsonSerializer.exporterPostIt(postItListe, file);
+            }
+        } catch (Exception e) {
+            
         }
     }
     
