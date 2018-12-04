@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -23,6 +24,9 @@ public class Projet extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+        
+        stage.setTitle("Gestion de post-it");
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("logo_application.png")));
         
         Font.loadFont(Projet.class.getResource("BRADHITC.TTF").toExternalForm(), 20);
         
