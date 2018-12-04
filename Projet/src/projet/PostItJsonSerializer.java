@@ -5,12 +5,17 @@
  */
 package projet;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 import javafx.scene.paint.Color;
@@ -26,10 +31,12 @@ public final class PostItJsonSerializer {
    
    public static List<PostIt> importerPostIt(File fichier){
       
-       List<PostIt> postIts = new LinkedList();
+       List<PostIt> postIts = new List();
            
         try {		
-            JSONObject json = new JSONObject(new String(fichier.toString()));
+            
+            BufferedReader w = new BufferedReader(new InputStreamReader(new FileInputStream(fichier))); 
+            JSONObject json = new JSONObject(new String(w.toString()));
 
             System.out.println("\nLecture du fichier JSON " + fichier + "\n");
 
