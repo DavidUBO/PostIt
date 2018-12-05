@@ -23,16 +23,16 @@ public class Projet extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/projet/FXMLDocument.fxml"));
         
         stage.setTitle("Gestion de post-it");
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("logo_application.png")));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/ressources/logo_application.png")));
         
-        Font.loadFont(Projet.class.getResource("BRADHITC.TTF").toExternalForm(), 20);
+        Font.loadFont(Projet.class.getResource("/ressources/BRADHITC.TTF").toExternalForm(), 20);
         
         Scene scene = new Scene(root);
         
-        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/ressources/styles.css").toExternalForm());
         
         stage.setScene(scene);
         stage.show();

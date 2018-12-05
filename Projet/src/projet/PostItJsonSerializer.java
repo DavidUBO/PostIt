@@ -31,7 +31,7 @@ public final class PostItJsonSerializer {
    
    public static List<PostIt> importerPostIt(File fichier){
       
-       List<PostIt> postIts = new List();
+       List<PostIt> postIts = new LinkedList<>();
            
         try {		
             
@@ -63,7 +63,9 @@ public final class PostItJsonSerializer {
 
 	} catch (JSONException e) {
             e.printStackTrace();
-	}
+	} catch (IOException e){
+            
+        }
         
         return null;
    }

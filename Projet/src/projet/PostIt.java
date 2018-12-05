@@ -102,11 +102,12 @@ public class PostIt extends Canvas {
         this.couleur = this.choixCouleur.getValue();
         this.couleur = new Color(couleur.getRed(), couleur.getGreen(), couleur.getBlue(), 1);
         this.choixCouleur.setValue(this.couleur);
-        this.changeCouleurTexteLabelContenu();
+        Color nouvelleCouleurContenu = this.getCouleurContenu();
+        this.labelContenu.setTextFill(nouvelleCouleurContenu);
         this.draw();
     }
     
-    public void changeCouleurTexteLabelContenu(){
+    public Color getCouleurContenu(){
         double rouge = this.couleur.getRed();
         double vert = this.couleur.getGreen();
         double bleu = this.couleur.getBlue();
@@ -126,9 +127,9 @@ public class PostIt extends Canvas {
         
         double L = 0.2126 * rouge + 0.7152 * vert + 0.0722 * bleu;
         if(L > Math.sqrt(1.05 * 0.05) - 0.05)
-            this.labelContenu.setTextFill(Color.BLACK);
+            return Color.BLACK;
         else
-            this.labelContenu.setTextFill(Color.WHITE);
+            return Color.WHITE;
     }
     
     public void afficheParDessus(){

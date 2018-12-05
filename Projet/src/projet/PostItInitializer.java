@@ -133,6 +133,7 @@ public final class PostItInitializer {
     }
     
     public static void initBoutonArchiver(PostIt p, Button bouton, Color couleur){
+        p.boutonArchiver = bouton;
         //Dessin
         ImageView image = new ImageView(Projet.controleur.archiveImage);
         image.setFitWidth(TAILLE_IMAGE_BOUTON);

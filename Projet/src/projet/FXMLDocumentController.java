@@ -13,8 +13,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -74,9 +72,9 @@ public class FXMLDocumentController implements Initializable {
             PostIt.changeTaillePostIt(postItListe, PostItTailleEnum.getEnumValue((String)postItChoixTaille.getValue()).getValue());
         });
         
-        editImage = new Image(getClass().getResourceAsStream("edit.png"));
-        deleteImage = new Image(getClass().getResourceAsStream("trash.png"));
-        archiveImage = new Image(getClass().getResourceAsStream("archive.png"));
+        editImage = new Image(getClass().getResourceAsStream("/ressources/edit.png"));
+        deleteImage = new Image(getClass().getResourceAsStream("/ressources/trash.png"));
+        archiveImage = new Image(getClass().getResourceAsStream("/ressources/archive.png"));
     }
     
     @FXML
