@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.LinkedList;
@@ -35,8 +36,11 @@ public final class PostItJsonSerializer {
            
         try {		
             
-            BufferedReader w = new BufferedReader(new InputStreamReader(new FileInputStream(fichier))); 
-            JSONObject json = new JSONObject(new String(w.toString()));
+//            BufferedReader w = new BufferedReader(new InputStreamReader(new FileInputStream(fichier))); 
+//            JSONObject json = new JSONObject(new String(w.toString()));
+            
+            byte[] encoded = Files.readAllBytes(fichier.toPath());
+            JSONObject json = new JSONObject(new String(encoded, StandardCharsets.UTF_8));
 
             System.out.println("\nLecture du fichier JSON " + fichier + "\n");
 
@@ -64,7 +68,7 @@ public final class PostItJsonSerializer {
 	} catch (JSONException e) {
             e.printStackTrace();
 	} catch (IOException e){
-            
+            e.printStackTrace();
         }
         
         return null;
@@ -105,6 +109,7 @@ public final class PostItJsonSerializer {
             
             BufferedWriter w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fichier)));   
             w.write(tableauPostIt.toString());
+            w.close();
             
 	} catch (JSONException e) {
             e.printStackTrace();
