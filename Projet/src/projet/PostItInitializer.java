@@ -14,6 +14,7 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -40,7 +41,9 @@ public final class PostItInitializer {
         p.setLayoutX(p.x);
         p.setLayoutY(p.y);
         p.setWidth(p.taille);
-        p.setHeight(p.taille);        
+        p.setHeight(p.taille);   
+        
+        p.estAffiche = true;
         
         //Ajout du label
         PostItInitializer.initLabelContenu(p, new Label(p.contenu));
@@ -70,7 +73,6 @@ public final class PostItInitializer {
     public static void initLabelContenu(PostIt p, Label label){
         p.labelContenu = label;
         p.setLayoutLabelContenu();
-        label.setMaxSize(p.taille - 2 * LABEL_MARGE_HORIZONTALE, p.taille - (LABEL_MARGE_VERTICALE * 2) - COLOR_PICKER_DEFAULT_HEIGHT - (1 + TAILLE_IMAGE_BOUTON + 1));
         label.setTextFill(Color.BLACK);
         label.setWrapText(true);
         label.getStyleClass().add("postItContenu");
@@ -86,20 +88,19 @@ public final class PostItInitializer {
         });
     }
     
-    public static void initBoutonEditer(PostIt p, Button bouton, Color couleur){
+    public static void initialiserBouton(PostIt p, Button bouton, Color couleur, String texte, Image icone){
         //Dessin
-        ImageView image = new ImageView(Projet.controleur.editImage);
+        ImageView image = new ImageView(icone);
         image.setFitWidth(TAILLE_IMAGE_BOUTON);
         image.setFitHeight(TAILLE_IMAGE_BOUTON);
         bouton.setGraphic(image);
-        bouton.setTooltip(new Tooltip("Éditer"));
+        bouton.setTooltip(new Tooltip(texte));
         bouton.setBackground(new Background(new BackgroundFill(couleur, CornerRadii.EMPTY, Insets.EMPTY)));
         ButtonBar.setButtonData(bouton, ButtonData.LEFT);
         p.buttonBar.getButtons().add(bouton);
         //Handlers
         bouton.setOnAction((ActionEvent event) -> {
             Projet.controleur.panneau.setCursor(Cursor.DEFAULT);
-            p.editerTexte();
         });
         bouton.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent t) -> {
             Projet.controleur.panneau.setCursor(Cursor.HAND);
@@ -109,50 +110,28 @@ public final class PostItInitializer {
         });
     }
     
-    public static void initBoutonSupprimer(PostIt p, Button bouton, Color couleur){
-        //Dessin
-        ImageView image = new ImageView(Projet.controleur.deleteImage);
-        image.setFitWidth(TAILLE_IMAGE_BOUTON);
-        image.setFitHeight(TAILLE_IMAGE_BOUTON);
-        bouton.setGraphic(image);
-        bouton.setTooltip(new Tooltip("Supprimer"));
-        bouton.setBackground(new Background(new BackgroundFill(couleur, CornerRadii.EMPTY, Insets.EMPTY)));
-        ButtonBar.setButtonData(bouton, ButtonData.LEFT);
-        p.buttonBar.getButtons().add(bouton);
+    public static void initBoutonEditer(PostIt p, Button bouton, Color couleur){
+        initialiserBouton(p, bouton, couleur, "Éditer", Projet.controleur.editImage);
         //Handlers
         bouton.setOnAction((ActionEvent event) -> {
-            Projet.controleur.panneau.setCursor(Cursor.DEFAULT);
+            p.editerTexte();
+        });
+    }
+    
+    public static void initBoutonSupprimer(PostIt p, Button bouton, Color couleur){
+        initialiserBouton(p, bouton, couleur, "Supprimer", Projet.controleur.deleteImage);
+        //Handlers
+        bouton.setOnAction((ActionEvent event) -> {
             p.supprimerPostIt();
-        });
-        bouton.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent t) -> {
-            Projet.controleur.panneau.setCursor(Cursor.HAND);
-        });
-        bouton.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent t) -> {
-            Projet.controleur.panneau.setCursor(Cursor.DEFAULT);
         });
     }
     
     public static void initBoutonArchiver(PostIt p, Button bouton, Color couleur){
         p.boutonArchiver = bouton;
-        //Dessin
-        ImageView image = new ImageView(Projet.controleur.archiveImage);
-        image.setFitWidth(TAILLE_IMAGE_BOUTON);
-        image.setFitHeight(TAILLE_IMAGE_BOUTON);
-        bouton.setGraphic(image);
-        bouton.setTooltip(new Tooltip("Archiver"));
-        bouton.setBackground(new Background(new BackgroundFill(couleur, CornerRadii.EMPTY, Insets.EMPTY)));
-        ButtonBar.setButtonData(bouton, ButtonData.LEFT);
-        p.buttonBar.getButtons().add(bouton);
+        initialiserBouton(p, bouton, couleur, "Archiver", Projet.controleur.archiveImage);
         //Handlers
         bouton.setOnAction((ActionEvent event) -> {
-            Projet.controleur.panneau.setCursor(Cursor.DEFAULT);
             p.archiverPostIt();
-        });
-        bouton.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent t) -> {
-            Projet.controleur.panneau.setCursor(Cursor.HAND);
-        });
-        bouton.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent t) -> {
-            Projet.controleur.panneau.setCursor(Cursor.DEFAULT);
         });
     }
     

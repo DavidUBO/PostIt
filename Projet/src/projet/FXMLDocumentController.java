@@ -157,7 +157,7 @@ public class FXMLDocumentController implements Initializable {
     public void changerAffichageArchive() {
         if(changerArchivageBouton.isSelected()){
             for(PostIt courant : postItListe){
-                if(courant.estArchive)
+                if(courant.estArchive && !courant.estAffiche)
                     courant.redessiner();
             }
         }
