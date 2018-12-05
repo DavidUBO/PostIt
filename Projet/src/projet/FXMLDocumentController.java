@@ -6,7 +6,6 @@
 package projet;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -21,7 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
@@ -49,7 +48,7 @@ public class FXMLDocumentController implements Initializable {
     public ToggleButton changerArchivageBouton;
     
     @FXML
-    public ChoiceBox postItChoixTaille;
+    public ComboBox postItChoixTaille;
     
     Image editImage;
     Image deleteImage;
@@ -67,10 +66,6 @@ public class FXMLDocumentController implements Initializable {
         
         postItChoixTaille.getItems().addAll(tailles);
         postItChoixTaille.setValue(PostItTailleEnum.TailleNormale.toString());
-        
-        postItChoixTaille.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> observableValue, Number number, Number number2) -> {
-            PostIt.changeTaillePostIt(postItListe, PostItTailleEnum.getEnumValue((String)postItChoixTaille.getValue()).getValue());
-        });
         
         editImage = new Image(getClass().getResourceAsStream("/ressources/edit.png"));
         deleteImage = new Image(getClass().getResourceAsStream("/ressources/trash.png"));
@@ -95,6 +90,7 @@ public class FXMLDocumentController implements Initializable {
             File file = fileChooser.showOpenDialog(null);
             if (file != null) {
               postItListe.addAll(PostItJsonSerializer.importerPostIt(file));
+              changerAffichageArchive();
             }
         } catch (Exception e) {
           e.printStackTrace();
@@ -167,5 +163,10 @@ public class FXMLDocumentController implements Initializable {
                     courant.effacer();
             }
         }
+    }
+    
+    @FXML
+    public void changerTaillePostIt(){
+        PostIt.changeTaillePostIt(postItListe, PostItTailleEnum.getEnumValue((String)postItChoixTaille.getValue()).getValue());
     }
 }
