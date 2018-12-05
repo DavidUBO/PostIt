@@ -5,18 +5,14 @@
  */
 package projet;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 import javafx.scene.paint.Color;
@@ -54,9 +50,9 @@ public final class PostItJsonSerializer {
 
         String contenu = tableauPostIt.getJSONObject(i).getString("contenu");
 
-        JSONArray tableauCouleur = tableauPostIt.getJSONObject(i).getJSONArray("couleur");
-        Color couleur = new Color(tableauCouleur.getDouble(0), tableauCouleur.getDouble(1),
-            tableauCouleur.getDouble(2), 1.0);
+        JSONObject tableauCouleur = tableauPostIt.getJSONObject(i).getJSONObject("couleur");
+        Color couleur = new Color(tableauCouleur.getDouble("rouge"), tableauCouleur.getDouble("vert"),
+            tableauCouleur.getDouble("bleu"), 1.0);
 
         PostIt monPostIt = new PostIt(x, y, taille, couleur, contenu);
         postIts.add(monPostIt);

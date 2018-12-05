@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -93,6 +92,9 @@ public class FXMLDocumentController implements Initializable {
     postIt.componentsToFront();
     miseAJourProgres();
   }
+  
+  // TODO : pour corriger bug import json, créer ici une méthode similaire à la précédente
+  //que l'on appelera depuis PostItJsonSerializer pour avoir le bon gc.
 
   @FXML
   private void chargerPostIt(ActionEvent event) {

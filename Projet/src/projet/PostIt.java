@@ -23,7 +23,7 @@ public class PostIt extends Canvas {
   double x;
   double y;
   double taille;
-  String contenu = "";
+  String contenu;
   Color couleur;
   boolean estArchive;
 
@@ -52,6 +52,7 @@ public class PostIt extends Canvas {
     this.taille = taille;
     this.couleur = new Color(1.0, 0.949, 0.8, 1.0);
     this.estArchive = false;
+    this.contenu = "";
     init();
     // editerTexte();
   }
