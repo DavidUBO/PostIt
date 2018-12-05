@@ -102,6 +102,7 @@ public class PostIt extends Canvas {
         Projet.controleur.panneau.getChildren().remove(choixCouleur);
         Projet.controleur.panneau.getChildren().remove(this);
         Projet.controleur.postItListe.remove(this);
+        Projet.controleur.miseAJourProgres();
     }
     
     public void archiverPostIt(){
@@ -109,6 +110,7 @@ public class PostIt extends Canvas {
         this.buttonBar.getButtons().remove(boutonArchiver);
         this.effacer();
         Projet.controleur.changerAffichageArchive();
+        Projet.controleur.miseAJourProgres();
     }
     
     public void changerCouleur(){

@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToolBar?>
@@ -9,6 +13,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="661.0" prefWidth="1266.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projet.FXMLDocumentController">
    <center>
@@ -19,16 +24,45 @@
       </ScrollPane>
    </center>
    <top>
-      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-        <items>
-            <Button mnemonicParsing="false" onAction="#creerUnPostIt" text="Créer un Post-it" />
-            <Pane HBox.hgrow="ALWAYS" />
-            <ComboBox fx:id="postItChoixTaille" onAction="#changerTaillePostIt" prefWidth="150.0" />
-            <ToggleButton fx:id="changerArchivageBouton" mnemonicParsing="false" onAction="#changerAffichageArchive" text="Post-it archivés">
-                <tooltip><Tooltip text="Basculer l'état d'affichage des post-it archivés" /></tooltip>
-            </ToggleButton>
-        </items>
-      </ToolBar>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <ToolBar prefHeight="40.0" prefWidth="200.0">
+              <items>
+                  <Button mnemonicParsing="false" onAction="#creerUnPostIt" text="Créer un Post-it" />
+                  <Pane HBox.hgrow="ALWAYS" />
+                  <ComboBox fx:id="postItChoixTaille" onAction="#changerTaillePostIt" prefWidth="150.0" />
+                  <ToggleButton fx:id="changerArchivageBouton" mnemonicParsing="false" onAction="#changerAffichageArchive" text="Post-it archivés">
+                      <tooltip>
+                        <Tooltip text="Basculer l'état d'affichage des post-it archivés" />
+                     </tooltip>
+                  </ToggleButton>
+              </items>
+            </ToolBar>
+            <HBox VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Avancement des tâches">
+                           <VBox.margin>
+                              <Insets left="5.0" top="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <ProgressBar fx:id="avancementTachesProgressBar" maxWidth="1.7976931348623157E308" minWidth="-Infinity" progress="0.0" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </ProgressBar>
+                     </children>
+                  </VBox>
+                  <ProgressIndicator fx:id="avancementTachesProgressIndicator" progress="0.0" HBox.hgrow="NEVER">
+                     <HBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </HBox.margin>
+                  </ProgressIndicator>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
    </top>
    <bottom>
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">

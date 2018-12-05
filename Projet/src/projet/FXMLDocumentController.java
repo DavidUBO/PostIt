@@ -22,6 +22,8 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
@@ -39,8 +41,7 @@ public class FXMLDocumentController implements Initializable {
     public List<PostIt> postItListe;
     
     @FXML
-    public Pane panneau;
-    
+    public Pane panneau;    
     @FXML
     public ScrollPane scroll;
     
@@ -49,6 +50,11 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     public ComboBox postItChoixTaille;
+    
+    @FXML
+    public ProgressBar avancementTachesProgressBar;
+    @FXML
+    public ProgressIndicator avancementTachesProgressIndicator;
     
     Image editImage;
     Image deleteImage;
@@ -67,6 +73,8 @@ public class FXMLDocumentController implements Initializable {
         postItChoixTaille.getItems().addAll(tailles);
         postItChoixTaille.setValue(PostItTailleEnum.TailleNormale.toString());
         
+        miseAJourProgres();
+        
         editImage = new Image(getClass().getResourceAsStream("/ressources/edit.png"));
         deleteImage = new Image(getClass().getResourceAsStream("/ressources/trash.png"));
         archiveImage = new Image(getClass().getResourceAsStream("/ressources/archive.png"));
@@ -79,6 +87,7 @@ public class FXMLDocumentController implements Initializable {
         postItListe.add(postIt);
         panneau.getChildren().add(postIt);
         postIt.componentsToFront();
+        miseAJourProgres();
     }
     
     @FXML
@@ -91,6 +100,7 @@ public class FXMLDocumentController implements Initializable {
             if (file != null) {
               postItListe.addAll(PostItJsonSerializer.importerPostIt(file));
               changerAffichageArchive();
+              miseAJourProgres();
             }
         } catch (Exception e) {
           e.printStackTrace();
@@ -168,5 +178,20 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     public void changerTaillePostIt(){
         PostIt.changeTaillePostIt(postItListe, PostItTailleEnum.getEnumValue((String)postItChoixTaille.getValue()).getValue());
+    }
+    
+    public void miseAJourProgres(){
+        int nbArchives = 0;
+        int nbTotal = postItListe.size();
+        for(PostIt courant : postItListe){
+            if(courant.estArchive)
+                nbArchives ++;
+        }
+        double progres = 1;
+        if(nbTotal != 0){
+            progres = (double)nbArchives / (double)nbTotal;
+        }
+        avancementTachesProgressBar.setProgress(progres);
+        avancementTachesProgressIndicator.setProgress(progres);
     }
 }
