@@ -10,45 +10,44 @@ package projet;
  * @author pondavda
  */
 public enum PostItTailleEnum {
-    TailleNormale,
-    GrandeTaille,
-    TresGrandeTaille;
-    
-    @Override
-    public String toString() {
-        switch(this){
-            case TailleNormale :
-                return "Taille normale";
-            case GrandeTaille :
-                return "Grande taille";
-            case TresGrandeTaille :
-                return "Très grande taille";
-            default :
-                return "";
-        }
+
+  TailleNormale, GrandeTaille, TresGrandeTaille;
+
+  @Override
+  public String toString() {
+    switch (this) {
+      case TailleNormale:
+        return "Taille normale";
+      case GrandeTaille:
+        return "Grande taille";
+      case TresGrandeTaille:
+        return "Très grande taille";
+      default:
+        return "";
     }
-    
-    public double getValue(){
-        switch(this){
-            case TailleNormale :
-                return 200;
-            case GrandeTaille :
-                return 300;
-            case TresGrandeTaille :
-                return 400;
-            default :
-                return 200;
-        }
+  }
+
+  public double getValue() {
+    switch (this) {
+      case TailleNormale:
+        return 200;
+      case GrandeTaille:
+        return 300;
+      case TresGrandeTaille:
+        return 400;
+      default:
+        return 200;
     }
-    
-    public static PostItTailleEnum getEnumValue(String s){
-        switch (s) {
-            case "Grande taille":
-                return PostItTailleEnum.GrandeTaille;
-            case "Très grande taille":
-                return PostItTailleEnum.TresGrandeTaille;
-            default:
-                return PostItTailleEnum.TailleNormale;
-        }
+  }
+
+  public static PostItTailleEnum getEnumValue(String s) {
+    switch (s) {
+      case "Grande taille":
+        return PostItTailleEnum.GrandeTaille;
+      case "Très grande taille":
+        return PostItTailleEnum.TresGrandeTaille;
+      default:
+        return PostItTailleEnum.TailleNormale;
     }
+  }
 }
