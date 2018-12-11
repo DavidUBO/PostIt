@@ -49,14 +49,14 @@ public final class PostItJsonSerializer {
         double taille = tableauPostIt.getJSONObject(i).getDouble("taille");
 
         String contenu = tableauPostIt.getJSONObject(i).getString("contenu");
-        String estArchive = tableauPostIt.getJSONObject(i).getBoolean("estArchive");
+        boolean estArchive = tableauPostIt.getJSONObject(i).getBoolean("estArchive");
 
         JSONObject tableauCouleur = tableauPostIt.getJSONObject(i).getJSONObject("couleur");
         Color couleur = new Color(tableauCouleur.getDouble("rouge"), tableauCouleur.getDouble("vert"),
             tableauCouleur.getDouble("bleu"), 1.0);
 
-        PostIt monPostIt = new PostIt(x, y, taille, couleur, contenu, estArchive);
-        postIts.add(monPostIt);
+        Projet.controleur.recreerUnPostIt(x, y, taille, couleur, contenu, estArchive);
+        //postIts.add(monPostIt);
 
         System.out.println("- Post It" + contenu + " (Importé)");
       }
@@ -108,7 +108,7 @@ public final class PostItJsonSerializer {
         System.out.println("\nAjout du Post It : " + monPostIt.contenu + "\n");
       }
       
-      JSONArray tableauPostIts = new JSONArray();
+      JSONObject tableauPostIts = new JSONObject();
       tableauPostIts.put("postits", tableauPostIt);
 
 

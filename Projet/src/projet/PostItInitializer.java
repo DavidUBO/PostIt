@@ -60,7 +60,8 @@ public final class PostItInitializer {
     // Ajout du bouton "Supprimer"
     PostItInitializer.initBoutonSupprimer(p, new Button(), boutonsColor);
     // Ajout du bouton "Archiver"
-    PostItInitializer.initBoutonArchiver(p, new Button(), boutonsColor);
+    if(!p.estArchive)
+        PostItInitializer.initBoutonArchiver(p, new Button(), boutonsColor);
 
     // Ajout de la liste déroulante pour choisir les couleur
     PostItInitializer.initColorPicker(p, new ColorPicker(p.couleur), boutonsColor);
