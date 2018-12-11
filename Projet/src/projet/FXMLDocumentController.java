@@ -29,6 +29,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
 /**
@@ -95,6 +96,13 @@ public class FXMLDocumentController implements Initializable {
   
   // TODO : pour corriger bug import json, créer ici une méthode similaire à la précédente
   //que l'on appelera depuis PostItJsonSerializer pour avoir le bon gc.
+  private void recreerUnPostIt(double x, double y, double taille, Color couleur, String contenu, boolean estArchive) {
+    PostIt postIt = new PostIt(x, y, taille, couleur, contenu, estArchive);
+    postItListe.add(postIt);
+    panneau.getChildren().add(postIt);
+    postIt.componentsToFront();
+    miseAJourProgres();
+  }
 
   @FXML
   private void chargerPostIt(ActionEvent event) {

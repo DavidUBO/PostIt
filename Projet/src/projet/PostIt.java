@@ -57,13 +57,14 @@ public class PostIt extends Canvas {
     // editerTexte();
   }
 
-  public PostIt(double x, double y, double taille, Color couleur, String contenu) {
+  public PostIt(double x, double y, double taille, Color couleur, String contenu, boolean estArchive) {
     this.x = x;
     this.y = y;
     this.taille = taille;
     this.estArchive = false;
     this.couleur = couleur;
     this.contenu = contenu;
+    this.estArchive = estArchive;
     init();
     // editerTexte();
   }
